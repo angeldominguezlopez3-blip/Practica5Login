@@ -8,12 +8,15 @@
     android:orientation="vertical"
     android:padding="20dp"
     android:gravity="center"
+    android:background="@color/white"
     tools:context=".MainActivity3">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="¡BIENVENIDO!"
+        android:background="@color/white"
+        android:textColor="@color/black"
         android:textSize="28sp"
         android:textStyle="bold"
         android:layout_marginBottom="30dp"/>
@@ -32,6 +35,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAlignment="center"
+        android:background="@color/white"
+        android:textColor="@color/black"
         android:textSize="24sp"
         android:layout_marginBottom="30dp"
         tools:text="Nombre de usuario"/>
@@ -42,6 +47,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:text="CERRAR SESIÓN"
+        android:textColor="@color/white"
         android:textSize="16sp"
         android:backgroundTint="@android:color/holo_red_light"/>
 
