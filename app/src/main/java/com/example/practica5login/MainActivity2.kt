@@ -1,5 +1,6 @@
 package com.example.practica5login
 
+
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
@@ -38,7 +39,7 @@ class MainActivity2 : AppCompatActivity() {
         editor = conector?.edit()
 
         btnGuardar.setOnClickListener {
-            val usuario = edtNuevoUsuario.text.toString()
+            val usuario = edtNuevoUsuario.text.toString().trim()
             val password = edtNuevaPassword.text.toString()
             val confirmarPassword = edtConfirmarPassword.text.toString()
 
@@ -52,28 +53,29 @@ class MainActivity2 : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            // Verificar si el usuario ya existe
-            val usuarioExistente = conector?.getString("usuario_$usuario", null)
-            if (usuarioExistente != null) {
-                Toast.makeText(this, "El usuario ya existe", Toast.LENGTH_SHORT).show()
+            // ✅ VERIFICACIÓN CORREGIDA: Buscar si el usuario ya existe
+            val passwordExistente = conector?.getString("password_$usuario", null)
+            if (passwordExistente != null) {
+                Toast.makeText(this, "El usuario '$usuario' ya existe", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
-            // Guardar el nuevo usuario
-            editor?.putString("usuario_$usuario", usuario)
-            editor?.putString("password_$usuario", password)
+            // ✅ GUARDAR USUARIO CORRECTAMENTE
+            editor?.putString("password_$usuario", password) // Guardamos la contraseña
+            editor?.putString("usuario_$usuario", usuario)   // Guardamos el nombre de usuario
 
-            // Asignar imagen según el usuario (puedes personalizar esta lógica)
+            // Asignar imagen según el usuario
             val imagenId = when (usuario.hashCode() % 3) {
-                0 -> R.drawable.user1 // Debes crear estos drawables
+                0 -> R.drawable.user1
                 1 -> R.drawable.user2
                 else -> R.drawable.user3
             }
             editor?.putInt("imagen_$usuario", imagenId)
 
+            // ✅ Aplicar los cambios
             editor?.apply()
 
-            Toast.makeText(this, "Usuario registrado exitosamente", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Usuario '$usuario' registrado exitosamente", Toast.LENGTH_SHORT).show()
 
             // Regresar al login
             val intent = Intent(this@MainActivity2, MainActivity::class.java)

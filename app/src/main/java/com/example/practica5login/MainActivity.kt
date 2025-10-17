@@ -1,5 +1,6 @@
 package com.example.practica5login
 
+
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
@@ -37,7 +38,7 @@ class MainActivity : AppCompatActivity() {
         conector = getSharedPreferences("usuarios", MODE_PRIVATE)
 
         btnLogin.setOnClickListener {
-            val usuario = edtUsuario.text.toString()
+            val usuario = edtUsuario.text.toString().trim()
             val password = edtPassword.text.toString()
 
             if (usuario.isEmpty() || password.isEmpty()) {
@@ -45,12 +46,12 @@ class MainActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            // Verificar si el usuario existe
-            val usuarioGuardado = conector?.getString("usuario_$usuario", null)
+            // ✅ VERIFICACIÓN MEJORADA: Buscar usuario por su clave única
             val passwordGuardada = conector?.getString("password_$usuario", null)
 
-            if (usuarioGuardado != null && passwordGuardada == password) {
+            if (passwordGuardada != null && passwordGuardada == password) {
                 // Login exitoso
+                Toast.makeText(this, "¡Login exitoso! Bienvenido $usuario", Toast.LENGTH_SHORT).show()
                 val intent = Intent(this@MainActivity, MainActivity3::class.java)
                 intent.putExtra("usuario", usuario)
                 startActivity(intent)
